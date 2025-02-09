@@ -1,0 +1,127 @@
+/* src/app/business-list/business-list.component.css */
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.controls-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-bar {
+  flex: 1;
+  min-width: 250px;
+}
+
+.page-size-selector {
+  width: 160px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.mat-table {
+  min-width: 800px;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+}
+
+.mat-sort-header-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.page-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.page-buttons button {
+  min-width: 40px;
+}
+
+.active {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.showing-records {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .controls-container {
+    width: 100%;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+
+  .mat-table {
+    font-size: 0.875rem;
+  }
+
+  .mat-cell, .mat-header-cell {
+    padding: 8px;
+  }
+
+  .page-buttons button {
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-buttons {
+    justify-content: center;
+  }
+}
+
+.error-snackbar {
+  background-color: #d32f2f;
+  color: white;
+}

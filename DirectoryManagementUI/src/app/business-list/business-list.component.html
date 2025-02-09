@@ -1,0 +1,146 @@
+<!-- src/app/business-list/business-list.component.html -->
+<div class="container">
+  <div class="header">
+    <h1>Business Directory</h1>
+    <button mat-raised-button color="primary" (click)="openAddDialog()">
+      Add New Business
+    </button>
+  </div>
+
+  <div class="controls-container">
+    <!-- Search Bar -->
+    <mat-form-field appearance="outline" class="search-bar">
+      <mat-label>Search businesses...</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="Search by name or city">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <!-- Page Size Selector -->
+    <mat-form-field appearance="outline" class="page-size-selector">
+      <mat-label>Items per page</mat-label>
+      <mat-select [(ngModel)]="pageSize" (selectionChange)="onPageSizeChange()">
+        <mat-option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Business Table -->
+  <div class="table-container">
+    <table mat-table [dataSource]="businesses" class="mat-elevation-z8" matSort (matSortChange)="onSortChange($event)">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Name
+          <!-- <mat-icon *ngIf="sortField === 'name'">
+            {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+          </mat-icon> -->
+        </th>
+        <td mat-cell *matCellDef="let business">{{ business.name }}</td>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Category</th>
+        <td mat-cell *matCellDef="let business">{{ business.category }}</td>
+      </ng-container>
+
+      <!-- City Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          City
+          <!-- <mat-icon *ngIf="sortField === 'city'">
+            {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+          </mat-icon> -->
+        </th>
+        <td mat-cell *matCellDef="let business">{{ business.city }}</td>
+      </ng-container>
+
+      <!-- Address Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <td mat-cell *matCellDef="let business">{{ business.address }}</td>
+      </ng-container>
+
+      <!-- State/Zip Column -->
+      <ng-container matColumnDef="stateZip">
+        <th mat-header-cell *matHeaderCellDef>State/Zip</th>
+        <td mat-cell *matCellDef="let business">{{ business.state }} {{ business.zipCode }}</td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Phone</th>
+        <td mat-cell *matCellDef="let business">{{ business.phoneNumber }}</td>
+      </ng-container>
+
+      <!-- Website Column -->
+      <ng-container matColumnDef="website">
+        <th mat-header-cell *matHeaderCellDef>Website</th>
+        <td mat-cell *matCellDef="let business">
+          <a *ngIf="business.website" [href]="business.website" target="_blank">
+            {{ business.website }}
+          </a>
+        </td>
+      </ng-container>
+
+      <!-- Rating Column -->
+      <ng-container matColumnDef="rating">
+        <th mat-header-cell *matHeaderCellDef>Rating</th>
+        <td mat-cell *matCellDef="let business">
+          <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                   [style.color]="star <= business.rating ? 'gold' : 'lightgray'">
+            star
+          </mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let business">
+          <button mat-icon-button color="primary" (click)="openEditDialog(business)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteBusiness(business.businessID)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Table Rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-container">
+    <div class="showing-records">
+      Showing {{ showingStart }} - {{ showingEnd }} of {{ totalRecords }} records
+    </div>
+    
+    <div class="page-buttons">
+      <button mat-button 
+              (click)="onPageChange(currentPage - 1)"
+              [disabled]="currentPage === 1">
+        Previous
+      </button>
+      
+      <button mat-button 
+              *ngFor="let page of [].constructor(totalPages); let i = index"
+              (click)="onPageChange(i + 1)"
+              [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
+      
+      <button mat-button 
+              (click)="onPageChange(currentPage + 1)"
+              [disabled]="currentPage === totalPages">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

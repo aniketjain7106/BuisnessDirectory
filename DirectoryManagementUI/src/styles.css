@@ -1,0 +1,15 @@
+/* src/styles.css */
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container {
+  padding: 20px;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  margin: 20px 0;
+}
