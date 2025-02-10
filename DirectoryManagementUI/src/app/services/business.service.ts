@@ -34,6 +34,7 @@ export class BusinessService {
   }
 
   updateBusiness(id: number, business: Business): Observable<void> {
+    business.businessID = id;
     return this.http.put<void>(`${this.apiUrl}/${id}`, business);
   }
 
